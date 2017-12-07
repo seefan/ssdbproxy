@@ -24,7 +24,7 @@ var (
 )
 
 func InitLog(configFile, logFile string) {
-	if exists, _ := FileNotExist(configFile); exists == false {
+	if exists, _ := FileExists(configFile); exists == false {
 		ioutil.WriteFile(configFile, []byte(strings.Replace(logConfig, "__log_url__", logFile, 1)), 0666)
 	}
 	if logger, err := log.LoggerFromConfigAsFile(configFile); err == nil {

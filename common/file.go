@@ -8,7 +8,7 @@ import "strings"
 // path string 文件路径
 // 返回 bool 文件不存在返回false
 // 返回 error 文件存在返回nil，如果有错误返回错误内容
-func FileNotExist(path string) (bool, error) {
+func FileExists(path string) (bool, error) {
 	_, err := os.Stat(path)
 	if err == nil {
 		return true, nil

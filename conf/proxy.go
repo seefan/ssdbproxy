@@ -1,9 +1,10 @@
 package conf
 
 import (
-	"gopkg.in/yaml.v2"
-	"github.com/seefan/ssdbproxy/common"
 	"github.com/seefan/goerr"
+	"github.com/seefan/ssdbproxy/common"
+	"gopkg.in/yaml.v2"
+
 	"io/ioutil"
 )
 
@@ -23,6 +24,8 @@ type ProxyConf struct {
 		Root string
 		//ssdb的工作目录
 		Work string
+		//ssdb连接池大小
+		PoolSize int `yaml:"pool_size"`
 	}
 	//分区
 	Partition struct {
@@ -46,9 +49,11 @@ func NewProxyConf() *ProxyConf {
 	pc.SSDB.Port = 8888
 	pc.SSDB.Root = "/usr/local/ssdb"
 	pc.SSDB.Work = "/usr/local/ssdb/var"
+	pc.SSDB.PoolSize = 5
 	pc.Partition.Model = "day"
 	pc.Partition.Limit = 5
 	pc.Partition.Pattern = "2016-01-02 15"
+
 	return pc
 }
 
@@ -57,7 +62,7 @@ func NewProxyConf() *ProxyConf {
 // path string 保存的路径
 // 返回 error 加载时的可能错误
 func (p *ProxyConf) Load(path string) error {
-	exists, err := common.FileNotExist(path)
+	exists, err := common.FileExists(path)
 	if err != nil || !exists {
 		return goerr.NewError(err, "ssdb proxy conf error")
 	}

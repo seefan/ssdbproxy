@@ -2,7 +2,7 @@ ssdb_proxy:
   host: 127.0.0.1
   port: 9999
   model: cluster
-  pool_size: 5
+  pool_size: 500
 ssdb:
   host: 127.0.0.1
   #起始端口，如果启动10个ssdb，那么会从[port]开始占用10个端口
@@ -10,11 +10,11 @@ ssdb:
   #ssdb的安装目录
   root: /app/ssdb
   #ssdb的工作目录
-  work: /app/ssdb/var
+  work: /app/ssdb/test
 partition:
   #按日期中的天进行分布，如设置2个ssdb的节点，分布方式为day%2
   model: day
   #日期的解析格式
-  pattern: 2006-01-02 15
-  #最多启动[limit]个ssdb实例，为了使服务连续，最多保存[limit-1]个节点的完整数据，剩余的1个节点清理数据
+  pattern: 2006-01-02
+  #最多启动[limit]个ssdb实例，[limit-1]个节点提供完整的服务，剩余的1个节点在清理数据或备用
   limit: 4
